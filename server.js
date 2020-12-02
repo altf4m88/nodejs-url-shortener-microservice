@@ -41,7 +41,7 @@ app.get('/api/hello', function(req, res) {
 app.post('/api/short/new', async (req, res) => {
   const url = req.body.url;
   const urlCode = shortId.generate();
-  if(!validUrl.isWebUrl(url)){
+  if(!validUrl.isWebUri(url)){
     res.status(401).json({
       error : 'INVALID URL'
     })
@@ -56,8 +56,8 @@ app.post('/api/short/new', async (req, res) => {
           original : url,
           shortened : urlCode
         });
-        await findOne.save();
-        res.json({original: findOne.original, shortened : findOne.shortened});
+        await findUrl.save();
+        res.json({original: findUrl.original, shortened : findUrl.shortened});
       }
     } catch(err){
       console.error(err);
