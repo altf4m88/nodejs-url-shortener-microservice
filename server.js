@@ -17,6 +17,13 @@ db.once('open', function() {
   console.log("DB Connected")
 });
 
+const Schema = mongoose.Schema;
+const urlSchema = new Schema({
+  original: String,
+  shortened: String
+});
+const URL = mongoose.model("URL", urlSchema);
+
 app.use(cors());
 app.use(bodyParser.urlencoded({extended : true}));
 app.use('/public', express.static(`${process.cwd()}/public`));
