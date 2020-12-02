@@ -2,12 +2,23 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const db = mongoose.connection;
+const app = express();
 
 // Basic Configuration
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("DB Connected")
+});
+
+app.use(cors());
+app.use(bodyParser.urlencoded({extended : true}));
 app.use('/public', express.static(`${process.cwd()}/public`));
 
 app.get('/', function(req, res) {
