@@ -8,7 +8,6 @@ const validUrl = require('valid-url');
 const db = mongoose.connection;
 const app = express();
 
-// Basic Configuration
 const port = process.env.PORT || 3000;
 
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
