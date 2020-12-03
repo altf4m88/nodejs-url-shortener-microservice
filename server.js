@@ -60,6 +60,22 @@ app.post('/api/short/new', async (req, res) => {
   }
 });
 
+app.get('/short/:url', async (req, res) => {
+  try{
+    const urlParams = await URL.findOne({shortened: req.params.url});
+
+    if(urlParams){
+      return res.redirect(urlParams.original);
+    } else {
+      return res.status(404).json({error : 'no url found'});
+    }
+
+  } catch(err){
+    console.error(err);
+    res.status(500).json('Server error...');
+  }
+});
+
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
